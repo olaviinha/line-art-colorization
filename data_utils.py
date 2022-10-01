@@ -18,7 +18,7 @@ import torch.utils.data as data
 from torch.utils.data.sampler import Sampler
 
 from torchvision import transforms
-from torchvision.transforms import Scale, CenterCrop
+from torchvision.transforms import Resize, CenterCrop
 
 mu, sigma = 1, 0.005
 X = stats.truncnorm((0 - mu) / sigma, (1 - mu) / sigma, loc=mu, scale=sigma)
@@ -60,13 +60,13 @@ def make_trans(img_size):
     ])
 
     ctrans = transforms.Compose([
-            transforms.Scale(img_size, Image.BICUBIC),
+            transforms.Resize(img_size, Image.BICUBIC),
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
 
     strans = transforms.Compose([
-            transforms.Scale(img_size, Image.BICUBIC),
+            transforms.Resize(img_size, Image.BICUBIC),
             transforms.ToTensor(),
             transforms.Lambda(jitter),
             transforms.Normalize((0.5), (0.5))
